@@ -9,6 +9,15 @@ An AI client for the terminal.
 - **Model Management**: Easily add and switch between models via the `/model` command.
 - **Fully Static Binaries**: Compiled against `musl` for zero-dependency deployment on Linux (x86_64 and aarch64).
 
+### // TODO: 
+
+- **aarch64 Builds**
+- **Model removing**
+- **Model renaming**
+- **Mouse scroll support in Chat**
+- **MCP access**
+- **Config file**
+
 ## Installation
 
 You can install `query.rs` using the provided install script:
