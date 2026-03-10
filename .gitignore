@@ -1,3 +1,7 @@
 /target
 .env
 .env*
+
+* Binaries
+query-rs-aarch64-linux
+query-rs-x86_64-linux
