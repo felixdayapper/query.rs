@@ -31,7 +31,7 @@ curl -fsSL https://raw.githubusercontent.com/bitscale-tech/query.rs/master/insta
 Or build from source:
 
 ```bash
-cargo build --release
+bash build.sh
 ```
 
 ## Usage

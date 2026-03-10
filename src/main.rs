@@ -16,6 +16,8 @@ use ratatui::{
     widgets::{Block, Borders, List, ListItem, Paragraph},
     Frame, Terminal,
 };
+use termimad::MadSkin;
+use ansi_to_tui::IntoText;
 use std::io;
 use std::time::Duration;
 
@@ -436,7 +438,10 @@ fn ui(f: &mut Frame, app: &App) {
     let chat_area = body_chunks[1];
     if app.show_help {
         let help_text = "### Commands\n\n- `/model <provider> <name> <api_key> [base_url]` - Add a new model.\n  - Providers: `openai`, `gemini`, `groq`, `ollama` \n- `/switch <model_name>` - Switch to another model.\n- `/remove <model_name>` - Remove a model from config.\n- `/rename <old> <new>` - Rename an existing model.\n- `/clear` - Clear chat history.\n- `/help` - Show help message.\n- `ESC` - Exit.\n\n### Keybindings\n\n- `Enter`: Send message\n- `Up/Down/PgUp/PgDn`: Scroll chat history\n- `Left/Right/Home/End`: Navigate input cursor\n- `Delete/Backspace`: Edit text\n\n### Interaction\n\n- **Sidebar**: Click on a model name to switch models.\n- **Chat**: Use Mouse Wheel to scroll history.\n\n## Configuration\n\nConfig is stored in `~/.config/query.rs/config.json`.";
-        let help_md = tui_markdown::from_str(help_text);
+        
+        let skin = MadSkin::default();
+        let help_ansi = skin.term_text(help_text).to_string();
+        let help_tui = help_ansi.into_text().unwrap_or_default();
         
         let help_inner_width = chat_area.width.saturating_sub(2) as usize;
         let wrapped_help = textwrap::wrap(help_text, help_inner_width);
@@ -448,7 +453,7 @@ fn ui(f: &mut Frame, app: &App) {
         let clamped_help_scroll = app.help_scroll.min(max_help_scroll);
         let help_scroll_y = max_help_scroll.saturating_sub(clamped_help_scroll);
 
-        let help_para = Paragraph::new(help_md)
+        let help_para = Paragraph::new(help_tui)
             .block(Block::default().borders(Borders::ALL).title("Help Menu"))
             .wrap(ratatui::widgets::Wrap { trim: false })
             .scroll((help_scroll_y, 0));
@@ -473,8 +478,11 @@ fn ui(f: &mut Frame, app: &App) {
         let clamped_chat_scroll = app.chat_scroll.min(max_scroll);
         let scroll_y = max_scroll.saturating_sub(clamped_chat_scroll);
 
-        let chat_text = tui_markdown::from_str(&full_chat_md);
-        let message_list = Paragraph::new(chat_text)
+        let skin = MadSkin::default();
+        let chat_ansi = skin.term_text(&full_chat_md).to_string();
+        let chat_tui = chat_ansi.into_text().unwrap_or_default();
+
+        let message_list = Paragraph::new(chat_tui)
             .block(Block::default().borders(Borders::ALL).title("Chat"))
             .wrap(ratatui::widgets::Wrap { trim: false })
             .scroll((scroll_y, 0));
