@@ -25,7 +25,7 @@ An AI client for the terminal.
 You can install `query.rs` using the provided install script:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/bitscale-tech/query.rs/main/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/bitscale-tech/query.rs/master/install.sh | sh
 ```
 
 Or build from source:
