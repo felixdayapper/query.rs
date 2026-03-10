@@ -67,7 +67,7 @@ Run the binary:
 
 ## Configuration
 
-Config is stored in `~/.config/query.rs/config.json`.
+Models info is stored in `~/.config/query.rs/models.json`.
 
 ## License
 

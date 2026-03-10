@@ -47,7 +47,7 @@ impl Config {
     fn get_path() -> Result<PathBuf> {
         let mut path = dirs::config_dir().context("Could not find config directory")?;
         path.push("query.rs");
-        path.push("config.json");
+        path.push("models.json");
         Ok(path)
     }
 
